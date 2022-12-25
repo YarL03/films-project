@@ -8,7 +8,7 @@ export const useSearch = () => {
     const debouncedSearch = useDebounce(searchTerm, 500)
 
     // в массивчик вторым элементом идет variable для GET-запроса
-    const {isSuccess, data} = useQuery(['serch movie list', debouncedSearch],
+    const {isSuccess, data} = useQuery(['search movie list', debouncedSearch],
     () => MovieService.getAllMovies(debouncedSearch), {
         select: ({data}) => data,
         enabled: !!debouncedSearch

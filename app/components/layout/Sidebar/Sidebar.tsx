@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import MoviesContainer from "./MoviesContainer/MoviesContainer copy";
+import MoviesContainer from "./MoviesContainer/MoviesContainer";
 import Search from "./Search/Search";
 
 import styles from './Sidebar.module.scss'
