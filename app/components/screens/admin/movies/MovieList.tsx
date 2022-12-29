@@ -12,14 +12,14 @@ import AdminTable from "@/components/ui/admin-table/AdminTable/AdminTable"
 
 
 const MovieList: FC = () => {
-    const {searchTerm, handleSearch, isLoading, data, deleteAsync} = useMovies()
+    const {searchTerm, handleSearch, isLoading, data, deleteAsync, createAsync} = useMovies()
 
     return (
         <Meta title="Movies">
             <AdminNavigation/>
             <Heading title="Movies"/>
 
-            <AdminHeader searchTerm={searchTerm} handleSearch={handleSearch}/>
+            <AdminHeader searchTerm={searchTerm} handleSearch={handleSearch} onClick={createAsync}/>
             <AdminTable tableItems={data || []} isLoading={isLoading} headerItems={['Title', 'Genre', 'Raiting']} removeHandler={deleteAsync}/>
         </Meta>
     )

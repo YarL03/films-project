@@ -2,6 +2,7 @@ import { useMemo, ChangeEvent, useState } from 'react';
 import { toastr } from 'react-redux-toastr';
 import { toastError } from '@/utils/toast-error';
 import { useMutation, useQuery } from 'react-query';
+import { useRouter } from 'next/router';
 
 import { ITableItem } from '../../../ui/admin-table/AdminTable/admin-table.interface';
 
@@ -16,6 +17,8 @@ import { convertMongoDate } from '@/utils/date/convertMongoDate';
 export const useActors = () => {
     const [searchTerm, setSearchTerm] = useState('')
     const debouncedSearch = useDebounce(searchTerm, 500)
+
+    const {push} = useRouter()
 
     // в массивчик вторым элементом идет variable для GET-запроса
     const queryData = useQuery(['actors list', debouncedSearch],
@@ -32,13 +35,24 @@ export const useActors = () => {
     })
 
     const {mutateAsync: deleteAsync} = useMutation('delete actor',
-    (actorId: string) => ActorService.deleteActor(actorId), {
+    (actorId: string) => ActorService.delete(actorId), {
         onError: (error) => {
             toastError(error, 'Delete actor')
         },
         onSuccess: () => {
             toastr.success('Delete actor', 'deleted successful')
             queryData.refetch()
+        }
+    })
+
+    const {mutateAsync: createAsync} = useMutation('create actor',
+    () => ActorService.create(), {
+        onError: (error) => {
+            toastError(error, 'Create actor')
+        },
+        onSuccess: ({data: _id}) => {
+            toastr.success('Create actor', 'created successful')
+            push(getAdminUrl(`actor/edit/${_id}`))
         }
     })
     
@@ -50,6 +64,7 @@ export const useActors = () => {
         handleSearch,
         searchTerm,
         deleteAsync,
+        createAsync,
         ...queryData
-    }), [queryData, searchTerm, deleteAsync])
+    }), [queryData, searchTerm, deleteAsync, createAsync])
 }

@@ -2,6 +2,7 @@ import { useMemo, ChangeEvent, useState } from 'react';
 import { toastr } from 'react-redux-toastr';
 import { toastError } from '@/utils/toast-error';
 import { useMutation, useQuery } from 'react-query';
+import { useRouter } from 'next/router';
 
 import { ITableItem } from './../../../ui/admin-table/AdminTable/admin-table.interface';
 
@@ -16,6 +17,8 @@ import { convertMongoDate } from '@/utils/date/convertMongoDate';
 export const useUsers = () => {
     const [searchTerm, setSearchTerm] = useState('')
     const debouncedSearch = useDebounce(searchTerm, 500)
+
+    const {push} = useRouter()
 
     // в массивчик вторым элементом идет variable для GET-запроса
     const queryData = useQuery(['users list', debouncedSearch],
@@ -41,6 +44,8 @@ export const useUsers = () => {
             queryData.refetch()
         }
     })
+
+   
     
     const handleSearch = (e:ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value)
