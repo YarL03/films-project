@@ -1,15 +1,30 @@
+import { FC } from "react"
+import { Controller, useForm } from "react-hook-form"
+import { stripHtml } from "string-strip-html"
+import dynamic from "next/dynamic"
+
 import AdminNavigation from "@/components/ui/admin-navigation/AdminNavigation"
 import Field from "@/components/ui/form-elements/Field"
+import SlugField from "@/components/ui/form-elements/SlugField/SlugField"
 import Heading from "@/components/ui/Heading/Heading"
 import SkeletonLoader from "@/components/ui/SkeletonLoading"
+import Button from "@/components/ui/form-elements/Button"
+
 import Meta from "@/utils/meta/Meta"
-import { FC } from "react"
-import { useForm } from "react-hook-form"
+
 import { IGenreEditInput } from "./genre-edit.interface"
+
 import { useGenreEdit } from "./useGenreEdit"
+import { generateSlug } from "@/utils/string/generateSlug"
+
+import formStyles from '../../../ui/form-elements/admin-form.module.scss'
+
+const DynamicTextEditor = dynamic(() => import('@/components/ui/form-elements/TextEditor'), {
+    ssr: false
+})
 
 const GenreEdit: FC = () => {
-    const {register, formState: {errors}, setValue, handleSubmit, getValues} = useForm<IGenreEditInput>({
+    const {register, formState: {errors}, setValue, handleSubmit, getValues, control} = useForm<IGenreEditInput>({
         mode: 'onChange'
     })
 
@@ -19,10 +34,10 @@ const GenreEdit: FC = () => {
         <Meta title="Edit genre">
             <AdminNavigation/>
             <Heading title="Edit genre"/>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} className={formStyles.form}>
                 {isLoading ? <SkeletonLoader count={3}/>
                 : <>
-                    <div>
+                    <div className={formStyles.fields}>
                         <Field {...register('name', {
                             required: 'Name is required!'
                         })}
@@ -32,7 +47,13 @@ const GenreEdit: FC = () => {
                         />
 
                         <div style={{width: '31%'}}>
-                            {/* Slug field */}
+                            <SlugField 
+                                register={register}
+                                error={errors.slug}
+                                generate={() => {
+                                    setValue('slug', generateSlug(getValues('name')))
+                                }}
+                                />
                         </div>
 
                         <Field {...register('icon', {
@@ -43,9 +64,33 @@ const GenreEdit: FC = () => {
                         style={{width: '31%'}}
                         />
 
-                        {/* Text editor draft.js */}
+                        <Controller
+                            control={control}
+                            name="description"
+                            defaultValue=""
+                            render={({
+                                field: {
+                                    value, onChange
+                                },
+                                fieldState: {error}
+                            }) => <DynamicTextEditor 
+                                        onChange={onChange}
+                                        value={value}
+                                        error={error}
+                                        placeholder="Description"
+                                    />
+                                    }   
+                            rules={{
+                                validate: {
+                                    required: (v) => 
+                                    (v && stripHtml(v).result.length > 0) || 'Description is required!'
+                                }
+                            }}                    
+                        />
 
-                        <button>Update</button>
+                        
+                        
+                        <Button>Update</Button>
                     </div>    
                 </>
             }
