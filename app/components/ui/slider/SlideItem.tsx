@@ -3,7 +3,7 @@ import { FC } from 'react'
 
 import { ISlide } from './slider.interface'
 
-import styles from './SlideArrow.module.scss'
+import styles from './Slider.module.scss'
 import Image from 'next/image'
 
 interface ISlideItem {
