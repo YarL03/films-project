@@ -1,7 +1,5 @@
 import { FC } from "react"
 import { Controller, useForm } from "react-hook-form"
-import { stripHtml } from "string-strip-html"
-import dynamic from "next/dynamic"
 
 import AdminNavigation from "@/components/ui/admin-navigation/AdminNavigation"
 import Field from "@/components/ui/form-elements/Field"
@@ -20,9 +18,6 @@ import { generateSlug } from "@/utils/string/generateSlug"
 import formStyles from '../../../ui/form-elements/admin-form.module.scss'
 import UploadField from "@/components/ui/form-elements/UploadField/UploadField"
 
-const DynamicTextEditor = dynamic(() => import('@/components/ui/form-elements/TextEditor'), {
-    ssr: false
-})
 
 const ActorEdit: FC = () => {
     const {register, formState: {errors}, setValue, handleSubmit, getValues, control} = useForm<IActorEditInput>({
