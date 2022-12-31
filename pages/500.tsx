@@ -1,4 +1,4 @@
-import Heading from "@/components/ui/Heading/Heading";
+import Heading from "@/components/ui/heading/Heading";
 
 import Meta from "@/utils/meta/Meta";
 

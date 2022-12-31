@@ -16,6 +16,10 @@ export const ActorService = {
         })
     },
 
+    async getBySlug(slug: string) {
+        return await axiosClassic.get<IActor>(getActorsUrl(`/by-slug/${slug}`))
+    },
+
     async getById(_id: string) {
         return await axios.get<IActorEditInput>(getActorsUrl(`/${_id}`))
     },

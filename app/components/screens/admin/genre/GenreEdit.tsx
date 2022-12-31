@@ -6,7 +6,7 @@ import dynamic from "next/dynamic"
 import AdminNavigation from "@/components/ui/admin-navigation/AdminNavigation"
 import Field from "@/components/ui/form-elements/Field"
 import SlugField from "@/components/ui/form-elements/SlugField/SlugField"
-import Heading from "@/components/ui/Heading/Heading"
+import Heading from "@/components/ui/heading/Heading"
 import SkeletonLoader from "@/components/ui/SkeletonLoading"
 import Button from "@/components/ui/form-elements/Button"
 

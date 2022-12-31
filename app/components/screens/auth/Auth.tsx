@@ -8,7 +8,7 @@ import { IAuthInput } from './auth.interface'
 
 import styles from './Auth.module.scss'
 import Meta from '@/utils/meta/Meta'
-import Heading from '@/components/ui/Heading/Heading'
+import Heading from '@/components/ui/heading/Heading'
 import Button from '@/components/ui/form-elements/Button'
 import AuthFields from './AuthFields'
 import { useActions } from '@/hooks/useActions'

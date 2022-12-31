@@ -14,8 +14,6 @@ const HomePage: NextPage<IHome> = ({slides, trendingMovies, actors}) => {
   
 }
 
-export default HomePage
-
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const {data: movies} = await MovieService.getAll()
@@ -65,3 +63,5 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   }
 }
+
+export default HomePage

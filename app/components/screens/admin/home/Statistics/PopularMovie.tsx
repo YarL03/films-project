@@ -7,7 +7,7 @@ import cn from 'classnames'
 import { IMovie } from '@/shared/types/movies.types'
 
 import styles from '../Admin.module.scss'
-import SubHeading from '@/components/ui/Heading/SubHeading'
+import SubHeading from '@/components/ui/heading/SubHeading'
 import Link from 'next/link'
 import { getMovieUrl } from '@/config/url.config'
 import Image from 'next/image'
