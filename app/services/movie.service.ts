@@ -36,6 +36,10 @@ export const MovieService = {
         return await axios.get<IMovieEditInput>(getMoviesUrl(`/${_id}`))
     },
 
+    async getBySlug(slug: string) {
+        return await axiosClassic.get<IMovie>(getMoviesUrl(`/${slug}`))
+    },
+
     async update(_id: string, data: IMovieEditInput) {
         return axios.put<string>(getMoviesUrl(`/${_id}`), data)
     },
