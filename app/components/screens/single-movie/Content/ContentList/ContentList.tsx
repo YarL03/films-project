@@ -11,7 +11,7 @@ const ContentList: FC<IContentList> = ({links, name}) => {
         <div className={styles.list}>
             <div className={styles.name}>{name}</div>
             <div className={styles.links}>
-                {links.slice(0,3).map((link, id) => <Fragment key={id}>
+                {links.map((link, id) => <Fragment key={id}>
                    <Link href={link.link}>
                     <a>{link.title}</a>
                    </Link>
