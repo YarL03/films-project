@@ -4,7 +4,6 @@ import dynamic from "next/dynamic"
 import Banner from "@/components/ui/banner/Banner"
 import SubHeading from "@/components/ui/heading/SubHeading"
 import Gallery from "@/components/ui/gallery/Gallery"
-import VideoPlayer from "@/components/ui/video-player/VideoPlayer"
 
 import Meta from "@/utils/meta/Meta"
 
@@ -13,8 +12,13 @@ import { IMoviePage } from "../../../../pages/movie/[slug]"
 import { IMovie } from "@/shared/types/movies.types"
 
 import Content from "./Content/Content"
+import { useUpdateCountOpened } from "./useUpdateCountOpened"
 
 const DynamicPlayer = dynamic(() => import("@/components/ui/video-player/VideoPlayer"), {
+    ssr: false
+})
+
+const DynamicRateMovie = dynamic(() => import("./RateMovie/RateMovie"), {
     ssr: false
 })
 
@@ -23,6 +27,7 @@ interface ISingleMoviePage extends IMoviePage {
 }
 
 const SingleMovie: FC<ISingleMoviePage> = ({movie, similarMovies}) => {
+    useUpdateCountOpened(movie.slug)
 
     return (
         <Meta title={movie.title} description={`Watch ${movie.title}`}>
@@ -35,7 +40,7 @@ const SingleMovie: FC<ISingleMoviePage> = ({movie, similarMovies}) => {
                 <Gallery items={similarMovies}/>
             </div>
 
-            {/* Raiting */}
+            <DynamicRateMovie id={movie._id} slug={movie.slug}/>
         </Meta>
     )
 }
